@@ -1,0 +1,125 @@
+<html>
+
+<head>
+	<title>Treasure Hunt</title>
+	<meta name="treasure-hunt" content="Treasure Hunt">
+	<!-- <script type="module" src="/src/index.js"></script> -->
+	<script src="dist/bundle.js"></script>
+	<script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+	<style>
+		#compass {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			z-index: 100;
+		}
+
+		#score {
+			position: relative;
+			top: 0;
+			z-index: 100;
+			font-size: 50;
+			text-align: center;
+			margin: auto;
+			width: 50%;
+			border: 3px solid black;
+			padding: 10px;
+			font-family: "Lucida Console", "Courier New", monospace;
+
+		}
+
+		#helpbox {
+			position: absolute;
+			top: 5;
+			right: 5;
+			z-index: 100;
+			font-size: 50;
+			text-align: center;
+			border: 3px solid green;
+			font-family: "Lucida Console", "Courier New", monospace;
+			font-size: 16px;
+
+		}
+
+		#winbox {
+			display: none;
+			position: relative;
+			top: 0;
+			z-index: 100;
+			font-size: 50;
+			text-align: center;	
+			margin: auto;
+			width: 50%;
+			border: 3px solid black;
+			padding: 10px;
+			font-family: "Lucida Console", "Courier New", monospace;
+			
+		}
+		
+
+		#button {
+			background-color: #4CAF50;
+			position: absolute;
+			bottom: 5;
+			left: 5;
+			z-index: 100;
+			font-size: 32px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="score">Score: </div>
+	<div id="helpbox"></div>
+	<div id="winbox">YOU WIN! Final Score: </div>
+	<div id="compass">
+		<img src="./assets/compass.png" id="pointer" />
+	</div>
+	<button onclick="getElementById('camera').setAttribute('help', '')" id="button">HELP</button>
+	<a-scene background="color: #3cf">
+		<!-- Assets -->
+		<a-assets>
+			<a-asset-item id="treasure-chest" src="./assets/treasure-chest/scene.gltf"></a-asset-item>
+			<a-asset-item id="treasure-map" src="./assets/treasure-map/scene.gltf"></a-asset-item>
+		</a-assets>
+
+		<!-- Camera -->
+		<a-camera compass camera-logger id="camera"></a-camera>
+
+		<!-- Clue 1 -->
+		<a-entity position="0 0 -10" id="clue1">
+			<a-entity gltf-model="#treasure-map" rotation="0 270 45" position="0 0 -10" scale="0.005 0.005 0.005">
+			</a-entity>
+			<a-box opacity="0.1" color="blue" width="1" height="1" depth="0.001" look-at='[camera]'
+				position="0 1 -10"
+				text="align: center; color: black; font: roboto; wrap-count:10; value: Walk North-East for the next clue.">
+			</a-box>
+		</a-entity>
+
+		<!-- Clue 2 -->
+		<a-entity position="60 0 -60" distance-detect visible="false" id="clue2">
+			<a-entity gltf-model="#treasure-map" rotation="0 270 45" scale="0.005 0.005 0.005">
+			</a-entity>
+			<a-box opacity="0.1" color="blue" width="1" height="1" depth="0.001" look-at='[camera]' position="0 1 0"
+				text="align: center; color: black; font: roboto; wrap-count:10; value: Go West, until you find the next one.">
+			</a-box>
+		</a-entity>
+
+		<!-- Clue 3 -->
+		<a-entity position="-40 0 -60" visible="false" id="clue3">
+			<a-entity gltf-model="#treasure-map" rotation="0 270 45" scale="0.005 0.005 0.005">
+			</a-entity>
+			<a-box opacity="0.1" color="blue" width="1" height="1" depth="0.001" look-at='[camera]' position="0 1 0"
+				text="align: center; color: black; font: roboto; wrap-count:10; value: The treasure is very close. Look around.">
+			</a-box>
+		</a-entity>
+
+		<!-- Treasure Chest -->
+		<a-entity position="-60 0 -30" visible="false" id="treasure">
+			<a-entity gltf-model="#treasure-chest" scale="0.02 0.02 0.02"></a-entity>
+		</a-entity>
+
+	</a-scene>
+</body>
+
+</html>
